@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { Link, useLocation } from "react-router-dom";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 const Container = styled.div`
   min-height: 100vh;
@@ -24,7 +25,7 @@ const HeaderInner = styled.div`
   gap: 1rem;
 `;
 
-const Brand = styled(Link)`
+const Brand = styled.span`
   color: #fff;
   font-weight: 800;
   text-decoration: none;
@@ -53,7 +54,7 @@ const Nav = styled.nav`
   }
 `;
 
-const NavLink = styled(Link)`
+const NavLink = styled.span`
   ${({ $active }) =>
     $active &&
     `
@@ -83,26 +84,29 @@ const Footer = styled.footer`
 `;
 
 function Layout({ children }) {
-  const location = useLocation();
+  const router = useRouter();
 
   return (
     <Container>
       <HeaderWrapper>
         <HeaderInner>
           <div>
-            <Brand to="/">EducaBlog</Brand>
+            <Link href="/" passHref>
+              <Brand>EducaBlog</Brand>
+            </Link>
             <Tagline>Postagens dos professores para alunos</Tagline>
           </div>
           <Nav>
-            <NavLink to="/" $active={location.pathname === "/"}>
-              Postagens
-            </NavLink>
-            <NavLink
-              to="/posts/novo"
-              $active={location.pathname.startsWith("/posts/novo")}
-            >
-              Nova postagem
-            </NavLink>
+            <Link href="/" passHref>
+              <NavLink $active={router.pathname === "/"}>
+                Postagens
+              </NavLink>
+            </Link>
+            <Link href="/posts/novo" passHref>
+              <NavLink $active={router.pathname.startsWith("/posts/novo")}>
+                Nova postagem
+              </NavLink>
+            </Link>
           </Nav>
         </HeaderInner>
       </HeaderWrapper>

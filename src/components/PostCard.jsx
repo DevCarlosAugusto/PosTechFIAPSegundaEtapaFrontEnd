@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 
 const Card = styled.article`
   background: var(--bg-card);
@@ -65,7 +65,9 @@ function PostCard({ post }) {
   return (
     <Card>
       <Title>
-        <Link to={`/posts/${post.id}`}>{post.title}</Link>
+        <Link href={`/posts/${post.id}`} passHref>
+          {post.title}
+        </Link>
       </Title>
 
       <Meta>
