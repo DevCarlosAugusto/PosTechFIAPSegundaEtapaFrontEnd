@@ -1,6 +1,6 @@
-import styled from "styled-components";
-import Link from "next/link";
-import { useRouter } from "next/router";
+import styled from 'styled-components';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 const Container = styled.div`
   min-height: 100vh;
@@ -102,8 +102,8 @@ function Layout({ children }) {
                 Postagens
               </NavLink>
             </Link>
-            <Link href="/posts/novo" passHref>
-              <NavLink $active={router.pathname.startsWith("/posts/novo")}>
+            <Link href='/posts/novo' passHref>
+              <NavLink $active={router.pathname.startsWith('/posts/novo')}>
                 Nova postagem
               </NavLink>
             </Link>
