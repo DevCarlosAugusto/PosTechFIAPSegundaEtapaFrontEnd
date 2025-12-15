@@ -23,19 +23,17 @@ export default function Index({ label, name, type = 'text', ...rest }) {
   const hasError = meta.touched && meta.error;
   const errorMessage = hasError ? meta.error : '';
 
-  const inputModifierClass = hasError ? 'error-label' : '';
-  const labelModifierClass = (field.value && field.value.toString().length > 0) ? 'Input__label--active' : '';
   const errorClass = hasError ? 'InputGroupBlock--error' : '';
+  const labelModifierClass = (field.value && field.value.toString().length > 0) ? 'Input__label--active' : '';
 
   return (
     <InputGroupBlock className={errorClass}>
       <InputGroupBlock__container>
         <Input__element aria-invalid={hasError ? 'true' : 'false'}
-                      className={inputModifierClass}
-                      id={name}
-                      type={type}
-                      {...field}
-                      {...rest} />
+                        id={name}
+                        type={type}
+                        {...field}
+                        {...rest} />
 
         <Input__label className={labelModifierClass}
                       htmlFor={name}>{label}</Input__label>
