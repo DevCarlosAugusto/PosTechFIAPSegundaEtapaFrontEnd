@@ -1,14 +1,5 @@
 import styled from 'styled-components';
 
-const InputGroupBlock = styled.div`
-  margin-bottom: 1.5rem;
-  position: relative;
-  width: 100%;
-
-  &--error {}
-`;
-
-export default InputGroupBlock
 
 export const InputGroupBlock__container = styled.div`
   padding-bottom: .5rem;
@@ -61,10 +52,6 @@ export const Input__element = styled.input`
     }
   }
 
-  &.error-input {
-    border-color: var(--error) !important;
-    box-shadow: 0 0 0 1px var(--error);
-  }
 `;
 
 export const Input__error__message_element = styled.p`
@@ -74,3 +61,22 @@ export const Input__error__message_element = styled.p`
   padding-left: .25rem;
   position: absolute;
 `;
+
+const InputGroupBlock = styled.div`
+  margin-bottom: 1.5rem;
+  position: relative;
+  width: 100%;
+
+  &.InputGroupBlock--error {
+    ${Input__element} {
+      border-color: var(--error);
+      box-shadow: 0 0 0 3px rgb(204, 0, 0, .5);
+    }
+
+    ${Input__label} {
+      color: var(--error);
+    }
+  }
+`;
+
+export default InputGroupBlock;
