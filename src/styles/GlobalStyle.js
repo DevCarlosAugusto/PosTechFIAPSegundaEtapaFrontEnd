@@ -2,13 +2,19 @@ import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
   :root {
+    --error: #cc0000;
+    --black: #000000;
+    --black-01: #333;
+    --white: #fff;
+    --white-01: #ccc;
+    --text-muted: #6b7280;
+    
     --bg-body: #f4f4f5;
     --bg-card: #ffffff;
     --primary: #3b82f6;
     --primary-hover: #2563eb;
     --accent: #f97316;
     --text-main: #111827;
-    --text-muted: #6b7280;
     --border-soft: #e5e7eb;
     --radius-lg: 12px;
     --shadow-soft: 0 10px 25px rgba(15, 23, 42, 0.08);

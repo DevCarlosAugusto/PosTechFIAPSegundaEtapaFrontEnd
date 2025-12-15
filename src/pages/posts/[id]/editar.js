@@ -1,11 +1,11 @@
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import { getPostById, updatePost } from "../../../services/postsService";
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import { getPostById, updatePost } from '../../../services/postsService';
 
 export default function PostEditPage() {
   const router = useRouter();
   const { id } = router.query;
-  const [form, setForm] = useState({ title: "", author: "", content: "" });
+  const [form, setForm] = useState({ title: '', author: '', content: '' });
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -15,7 +15,7 @@ export default function PostEditPage() {
           const data = await getPostById(id);
           setForm(data);
         } catch (err) {
-          console.error("Erro ao carregar post", err);
+          console.error('Erro ao carregar post', err);
         }
       }
       fetchPost();
@@ -29,7 +29,7 @@ export default function PostEditPage() {
       await updatePost(id, form);
       router.push(`/posts/${id}`); // Redireciona para a página de detalhes do post
     } catch (err) {
-      console.error("Erro ao atualizar post", err);
+      console.error('Erro ao atualizar post', err);
     } finally {
       setLoading(false);
     }
@@ -72,7 +72,7 @@ export default function PostEditPage() {
           />
         </div>
         <button type="submit" disabled={loading}>
-          {loading ? "Salvando..." : "Salvar Alterações"}
+          {loading ? 'Salvando...' : 'Salvar Alterações'}
         </button>
       </form>
     </div>

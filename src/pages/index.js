@@ -1,7 +1,14 @@
-import { useState, useEffect } from "react";
-import styled from "styled-components";
-import PostCard from "../components/PostCard";
-import { getPosts } from "../services/postsService";
+import { useState, useEffect } from 'react';
+import styled from 'styled-components';
+
+import { Formik, Form } from 'formik';
+
+import { getPosts } from '../services/postsService';
+
+import InputGroupBlock from '../components/forms/InputGroup/index.js';
+import PostCard from '../components/PostCard';
+import { PostSchema } from '../../utils/validations/register.js';
+
 
 const SearchBar = styled.input`
   width: 100%;
@@ -11,19 +18,26 @@ const SearchBar = styled.input`
   border: 1px solid #ccc;
 `;
 
+
 export default function HomePage() {
   const [posts, setPosts] = useState([]);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(false);
 
+  const formInitValues = {
+    title: '',
+    author: 'Exemplo',
+    content: 'Conteúdo de teste'
+  };
+
   async function loadPosts() {
+    setLoading(true);
+
     try {
-      setLoading(true);
       const data = await getPosts(search);
-      console.log('oioi')
       setPosts(data);
     } catch (err) {
-      console.error("Erro ao carregar posts", err);
+      console.error('Erro ao carregar posts', err);
     } finally {
       setLoading(false);
     }
@@ -33,24 +47,27 @@ export default function HomePage() {
     loadPosts();
   }, []);
 
-  // function handleKeyDown(e) {
-  //   if (e.key === "Enter") {
-  //     loadPosts();
-  //   }
-  // }
-
   return (
     <div>
-      <h1 style={{ marginBottom: "0.75rem" }}>Posts recentes</h1>
+      <h1 style={{ marginBottom: '0.75rem' }}>Posts recentes</h1>
       <p
         style={{
           marginTop: 0,
-          marginBottom: "1.2rem",
-          color: "var(--text-muted)",
+          marginBottom: '1.2rem',
+          color: 'var(--text-muted)',
         }}
       >
         Explore os conteúdos publicados por professores.
       </p>
+
+      <Formik initialValues={formInitValues}
+              validationSchema={PostSchema}
+              onSubmit={() => console.log('Salvo!')}>
+        <Form>
+          <InputGroupBlock label={'Black Lagoon'} placeholder="Teste qualquer" name="title" />
+          <button type="submit">Salvar</button>
+        </Form>
+      </Formik>
 
       {/* <SearchBar
         placeholder="Buscar por título, autor ou palavra-chave..."

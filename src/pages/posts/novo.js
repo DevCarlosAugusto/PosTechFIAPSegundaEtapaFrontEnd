@@ -1,9 +1,9 @@
-import { useState } from "react";
-import { useRouter } from "next/router";
-import { createPost } from "../../services/postsService";
+import { useState } from 'react';
+import { useRouter } from 'next/router';
+import { createPost } from '../../services/postsService';
 
 export default function PostCreatePage() {
-  const [form, setForm] = useState({ title: "", author: "", content: "" });
+  const [form, setForm] = useState({ title: '', author: '', content: '' });
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
@@ -14,7 +14,7 @@ export default function PostCreatePage() {
       await createPost(form);
       router.push("/"); // Redireciona para a página inicial após criar o post
     } catch (err) {
-      console.error("Erro ao criar post", err);
+      console.error('Erro ao criar post', err);
     } finally {
       setLoading(false);
     }
@@ -57,7 +57,7 @@ export default function PostCreatePage() {
           />
         </div>
         <button type="submit" disabled={loading}>
-          {loading ? "Salvando..." : "Criar Post"}
+          {loading ? 'Salvando...' : 'Criar Post'}
         </button>
       </form>
     </div>

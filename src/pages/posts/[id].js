@@ -1,6 +1,6 @@
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import { getPostById } from "../../services/postsService";
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import { getPostById } from '../../services/postsService';
 
 export default function PostDetailPage() {
   const router = useRouter();
@@ -15,7 +15,7 @@ export default function PostDetailPage() {
           const data = await getPostById(id);
           setPost(data);
         } catch (err) {
-          console.error("Erro ao carregar post", err);
+          console.error('Erro ao carregar post', err);
         } finally {
           setLoading(false);
         }

@@ -1,5 +1,4 @@
-
-// colocar os endpoints conforme o nosso backend
+// TODO: colocar os endpoints conforme o nosso backend
 
 import axios from 'axios';
 import api from "./api";
@@ -12,14 +11,14 @@ export async function getPosts() {
   } catch (error) {
     if (error.response) {
       // Erro com resposta do servidor
-      console.error("Erro no servidor:", error.response.data);
-      console.error("Status:", error.response.status);
+      console.error('Erro no servidor: ', error.response.data);
+      console.error('Status: ', error.response.status);
     } else if (error.request) {
       // Sem resposta do servidor
-      console.error("Sem resposta do servidor:", error.request);
+      console.error('Sem resposta do servidor: ', error.request);
     } else {
       // Erro na configuração da requisição
-      console.error("Erro na requisição:", error.message);
+      console.error('Erro na requisição: ', error.message);
     }
     throw error;
   }
