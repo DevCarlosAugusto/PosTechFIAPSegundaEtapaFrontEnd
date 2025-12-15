@@ -23,13 +23,13 @@ export default function Index({ label, name, type = 'text', ...rest }) {
   const hasError = meta.touched && meta.error;
   const errorMessage = hasError ? meta.error : '';
 
-  const labelModifierClass = hasError ? 'error-label' : '';
-  const inputModifierClass = hasError ? 'error-input' : '';
+  const inputModifierClass = hasError ? 'error-label' : '';
+  const labelModifierClass = (field.value && field.value.toString().length > 0) ? 'Input__label--active' : '';
   const errorClass = hasError ? 'InputGroupBlock--error' : '';
 
   return (
     <InputGroupBlock className={errorClass}>
-      <InputGroupBlock__container class="InputGroupBlock__container">
+      <InputGroupBlock__container>
         <Input__element aria-invalid={hasError ? 'true' : 'false'}
                       className={inputModifierClass}
                       id={name}

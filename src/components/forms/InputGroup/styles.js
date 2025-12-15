@@ -26,14 +26,13 @@ export const Input__label = styled.label`
   transform: translateY(-50%);
   top: 50%;
 
-  &--error {
-    color: var(--error);
+  &.Input__label--active {
+    left: .5rem;
+    top: -.75rem;
   }
 `;
 
-// 3. ELEMENT (Input)
 export const Input__element = styled.input`
-  /* Estilos do Elemento: input-group__input */
   width: 100%;
   padding: 0.75rem 1rem;
   border: 1px solid var(--white-01);
@@ -49,8 +48,8 @@ export const Input__element = styled.input`
   }
 
   &:focus-within {
-    & + ${Input__label} {
-      color: var(--black-01);
+    & + ${Input__label}:not(.Input__label--active) {
+      //color: var(--black-01);
       left: .5rem;
       top: -.75rem;
     }
