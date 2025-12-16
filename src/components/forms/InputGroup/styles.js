@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 
 export const InputGroupBlock__container = styled.div`
-  padding-bottom: .5rem;
+  padding-bottom: 1.25rem;
   position: relative;
 `;
 
@@ -56,7 +56,7 @@ export const Input__element = styled.input`
 export const Input__error__message_element = styled.p`
   color: var(--error);
   font-size: .75rem;
-  margin-top: 0;
+  margin-top: -1rem;
   padding-left: .25rem;
   position: absolute;
 `;

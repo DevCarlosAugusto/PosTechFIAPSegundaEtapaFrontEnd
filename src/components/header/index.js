@@ -1,6 +1,8 @@
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 
+import { useAuth } from '../../contexts/AuthContext';
+
 import {
   Header,
   Header__Wrapper,
@@ -10,7 +12,9 @@ import {
 } from './styles';
 
 function header() {
+  const { isAuthenticated, loading } = useAuth();
   const router = useRouter();
+  const MENU = isAuthenticated ? [{ path: '/', text: 'Postagens'}, { path: '/posts/novo', text: 'Nova Postagem'}] : [{ path: '/login', text: 'Login'}, { path: '/register', text: 'Cadastro'}];
 
   return (
     <Header>
@@ -23,16 +27,11 @@ function header() {
         </div>
 
         <Nav>
-          <Link href="/" passHref>
-            <NavLink $active={router.pathname === "/"}>
-              Postagens
-            </NavLink>
-          </Link>
-          <Link href='/posts/novo' passHref>
-            <NavLink $active={router.pathname.startsWith('/posts/novo')}>
-              Nova postagem
-            </NavLink>
-          </Link>
+          {
+            MENU.map(({ path, text }) => (
+              <NavLink $active={router.pathname === path} href={path} key={path}>{text}</NavLink>
+            ))
+          }
         </Nav>
       </Header__Wrapper>
     </Header>

@@ -40,7 +40,7 @@ export const Header__Wrapper = styled.div`
   justify-content: space-between;
   max-width: 960px;
   margin: 0 auto;
-  padding: 0 1.5rem;
+  padding: 0 1rem;
   text-align: center;
   width: 100%;
 
@@ -54,7 +54,7 @@ export const Header__Wrapper = styled.div`
 
   @media (min-width: 768px) {
     flex-direction: row;
-    padding: .75rem 1.5rem;
+    padding: .75rem 1rem;
     text-align: left;
 
     .Header__boxtitle {
@@ -78,7 +78,7 @@ export const Nav = styled.nav`
   }
 `;
 
-export const NavLink = styled.span`
+export const NavLink = styled.a`
   ${({ $active }) =>
   $active &&
   `

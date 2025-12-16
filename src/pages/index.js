@@ -7,7 +7,7 @@ import { getPosts } from '../services/postsService';
 
 import InputGroupBlock from '../components/forms/InputGroup/index.js';
 import PostCard from '../components/PostCard';
-import { PostSchema } from '../../utils/validations/register.js';
+import { PostSchema } from '../utils/validations/register.js';
 
 
 const SearchBar = styled.input`
