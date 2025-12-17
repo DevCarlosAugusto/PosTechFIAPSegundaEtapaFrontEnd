@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 
-
 export const InputGroupBlock__container = styled.div`
   padding-bottom: 1.25rem;
   position: relative;
@@ -20,7 +19,7 @@ export const Input__label = styled.label`
 
   &.Input__label--active {
     left: .5rem;
-    top: -.5rem;
+    top: -.25rem;
   }
 `;
 
@@ -39,10 +38,11 @@ export const Input__element = styled.input`
     outline: none;
   }
 
+  &:-webkit-autofill,
   &:focus-within {
     & + ${Input__label}:not(.Input__label--active) {
       left: .5rem;
-      top: -.5rem;
+      top: -.25rem;
     }
   }
 
