@@ -1,23 +1,16 @@
-// TODO: colocar os endpoints conforme o nosso backend
-
-import axios from 'axios';
-import api from "./api";
+import api from './api';
 
 export async function getPosts() {
   try {
-    // const { data } = await api.get("/posts");
-    const { data } = await axios.get("http://localhost:3000/posts")
+    const { data } = await api.get('/posts')
     return data;
   } catch (error) {
     if (error.response) {
-      // Erro com resposta do servidor
       console.error('Erro no servidor: ', error.response.data);
       console.error('Status: ', error.response.status);
     } else if (error.request) {
-      // Sem resposta do servidor
       console.error('Sem resposta do servidor: ', error.request);
     } else {
-      // Erro na configuração da requisição
       console.error('Erro na requisição: ', error.message);
     }
     throw error;
@@ -30,7 +23,7 @@ export async function getPostById(id) {
 }
 
 export async function createPost(payload) {
-  const { data } = await api.post("/posts", payload);
+  const { data } = await api.post('/posts', payload);
   return data;
 }
 

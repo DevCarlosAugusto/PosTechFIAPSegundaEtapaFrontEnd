@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { Formik, Form } from 'formik';
 
-import { getPosts } from '../services/postsService';
+import { getPosts } from '../services/posts.service.js';
 
 import InputGroupBlock from '../components/forms/InputGroup/index.js';
 import PostCard from '../components/PostCard';

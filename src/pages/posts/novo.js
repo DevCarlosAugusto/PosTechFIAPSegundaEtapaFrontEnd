@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { createPost } from '../../services/postsService';
+import { createPost } from '../../services/posts.service.js';
 
 export default function PostCreatePage() {
   const [form, setForm] = useState({ title: '', author: '', content: '' });
