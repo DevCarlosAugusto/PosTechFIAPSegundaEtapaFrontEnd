@@ -19,17 +19,14 @@ export default function LoginPage() {
         initialValues={{ email: '', password: '' }}
         validationSchema={LoginSchema}
         onSubmit={(values) => login(values.email)}>
-        <Form autoComplete="one-time-code">
-          <FormikInputGroup
-            label="E-mail"
-            name="email" // Corresponde ao schema
-            type="email"
-          />
-          <FormikInputGroup
-            label="Senha"
-            name="password"
-            type="password"
-          />
+        <Form autoComplete="off">
+          <FormikInputGroup label="E-mail"
+                            name="email"
+                            type="email" />
+          <FormikInputGroup label="Senha"
+                            name="password"
+                            type="password" />
+
           <button type="submit">Entrar</button>
         </Form>
       </Formik>

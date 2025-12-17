@@ -47,6 +47,19 @@ const GlobalStyle = createGlobalStyle`
     flex-direction: column;
     gap: 0.35rem;
   }
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    ///* Use a large inset box-shadow to cover the entire input field with a solid color */
+    //-webkit-box-shadow: 0 0 0 1000px rgba(255, 255, 255, 0) inset !important;
+    //
+    ///* Ensure the text color remains visible */
+    //-webkit-text-fill-color: rgba(255, 255, 255, 0) !important;
+    //
+    ///* Optional: Add a transition delay to prevent the default color from briefly showing */
+    //transition: background-color 5000s ease-in-out 0s;
+  }
 `;
 
 export default GlobalStyle;

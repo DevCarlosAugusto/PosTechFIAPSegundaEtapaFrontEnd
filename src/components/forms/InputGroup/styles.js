@@ -13,7 +13,7 @@ export const Input__label = styled.label`
   left: 1.5rem;
   transition: all .2s ease-out;
   margin-bottom: .5rem;
-  margin-top: -.25rem;
+  margin-top: -.5rem;
   position: absolute;
   transform: translateY(-50%);
   top: 50%;
