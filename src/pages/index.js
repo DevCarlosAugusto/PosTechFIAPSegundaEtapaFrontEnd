@@ -1,29 +1,23 @@
 import { useState, useEffect } from 'react';
 
 import { Formik, Form } from 'formik';
-import { PostSchema } from '../utils/validations/register.js';
+import { SearchSchema } from '../utils/validations/search.js';
 
 import { getPosts } from '../services/posts.service.js';
 
 import InputGroupBlock from '../components/forms/InputGroup/index.js';
 import PostCard from '../components/postcard/PostCard.js';
 
-import { useAuth } from '../contexts/AuthContext';
+// import { useAuth } from '../contexts/AuthContext';
 
-import { ContainerHome, Figure} from './styles.js';
+import { ContainerHome, Figure } from './styles.js';
 
 
 export default function HomePage() {
   const [posts, setPosts] = useState([]);
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(false);
-  const { user } = useAuth();
-
-  const formInitValues = {
-    busca: search,
-  };
-
-  console.info('USER: ', user);
+  const formInitValues = { busca: search };
 
   async function loadPosts() {
     setLoading(true);
@@ -56,7 +50,7 @@ export default function HomePage() {
           </p>
 
           <Formik initialValues={formInitValues}
-                  validationSchema={PostSchema}
+                  validationSchema={SearchSchema}
                   onSubmit={() => console.log('Salvo!')}>
             <Form>
               <InputGroupBlock label={'Buscar'}

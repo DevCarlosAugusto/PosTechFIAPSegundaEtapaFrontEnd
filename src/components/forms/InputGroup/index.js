@@ -5,6 +5,7 @@ import InputGroupBlock, {
   Input__error__message_element,
   Input__label,
   Input__element,
+  Textarea__element,
   InputGroupBlock__container,
 } from './styles';
 
@@ -13,12 +14,13 @@ import InputGroupBlock, {
  * Ele usa o useField() para conectar o input ao estado global do Formik.
  *
  * @param {string} label - O texto exibido no label.
- * @param {string} id - O NOME ÚNICO do campo que DEVE corresponder ao schema Yup.
+ * @param {string} name - O NOME ÚNICO do campo que DEVE corresponder ao schema Yup.
  * @param {string} type - O tipo do input (text, email, password, etc.).
+ * @param {boolean} showTextArea - Valor que informa se é um textArea ou não
  * @param {object} rest - Todas as props restantes (placeholder, min, max, etc.).
  */
 
-export default function Index({ label, name, type = 'text', ...rest }) {
+export default function Index({ label, name, type = 'text', showTextArea= false, ...rest }) {
   const [field, meta] = useField(name);
   const hasError = meta.touched && meta.error;
   const errorMessage = hasError ? meta.error : '';
@@ -29,11 +31,19 @@ export default function Index({ label, name, type = 'text', ...rest }) {
   return (
     <InputGroupBlock className={errorClass}>
       <InputGroupBlock__container>
-        <Input__element aria-invalid={hasError ? 'true' : 'false'}
-                        id={name}
-                        type={type}
-                        {...field}
-                        {...rest} />
+        {
+          !showTextArea ?
+            (<Input__element aria-invalid={hasError ? 'true' : 'false'}
+                             id={name}
+                             type={type}
+                             {...field}
+                             {...rest} />) :
+            (<Textarea__element aria-invalid={hasError ? 'true' : 'false'}
+                                id={name}
+                                rows="10"
+                                {...field}
+                                {...rest} />)
+        }
 
         <Input__label className={labelModifierClass}
                       htmlFor={name}>{label}</Input__label>

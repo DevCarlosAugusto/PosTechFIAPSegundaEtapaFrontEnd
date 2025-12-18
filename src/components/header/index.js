@@ -7,14 +7,15 @@ import {
   Header,
   Header__Wrapper,
   WebTitle,
-  Nav, NavLink,
-  WebSubtitle,
+  Nav,
+  NavLink,
+  WebSubtitle
 } from './styles';
 
 function header() {
-  const { isAuthenticated, loading } = useAuth();
+  const { isAuthenticated } = useAuth();
   const router = useRouter();
-  const MENU = isAuthenticated ? [{ path: '/', text: 'Postagens'}, { path: '/posts/novo', text: 'Nova Postagem'}] : [{ path: '/login', text: 'Login'}, { path: '/register', text: 'Cadastro'}];
+  const MENU = isAuthenticated ? [{ path: '/', text: 'Postagens'}, { path: '/posts/add', text: 'Nova Postagem'}] : [{ path: '/login', text: 'Login'}, { path: '/register', text: 'Cadastro'}];
 
   return (
     <Header>

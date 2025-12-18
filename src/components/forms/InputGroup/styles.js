@@ -15,7 +15,7 @@ export const Input__label = styled.label`
   margin-top: -.5rem;
   position: absolute;
   transform: translateY(-50%);
-  top: 50%;
+  top: 1.75rem;
 
   &.Input__label--active {
     left: .5rem;
@@ -24,13 +24,44 @@ export const Input__label = styled.label`
 `;
 
 export const Input__element = styled.input`
-  width: 100%;
-  padding: .75rem 1rem;
   border: 1px solid var(--white-01);
   border-radius: 4px;
-  font-size: 1rem;
-  transition: border-color .2s, box-shadow .2s;
   box-sizing: border-box;
+  font-size: 1rem;
+  padding: .75rem 1rem;
+  transition: border-color .2s, box-shadow .2s;
+  width: 100%;
+
+  &:focus {
+    border-color: #0070f3;
+    box-shadow: 0 0 0 3px rgba(0, 112, 243, .2);
+    outline: none;
+  }
+
+  &:-webkit-autofill,
+  &:focus,
+  &:focus-within {
+    & + ${Input__label}:not(.Input__label--active) {
+      left: .5rem;
+      top: -.25rem;
+    }
+  }
+
+  &:not(:focus-within) {
+    &::placeholder {
+      color: transparent;
+    }
+  }
+`;
+
+export const Textarea__element = styled.textarea`
+  border: 1px solid var(--white-01);
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 1rem;
+  padding: .75rem 1rem;
+  transition: border-color .2s, box-shadow .2s;
+  width: 100%;
 
   &:focus {
     border-color: #0070f3;
@@ -67,7 +98,8 @@ const InputGroupBlock = styled.div`
   width: 100%;
 
   &.InputGroupBlock--error {
-    ${Input__element} {
+    ${Input__element},
+    ${Textarea__element} {
       border-color: var(--error);
       box-shadow: 0 0 0 3px rgb(204, 0, 0, .5);
     }
