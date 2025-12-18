@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { getPostById } from '../../services/postsService';
+import { getPostById } from '../../services/posts.service.js';
 
 export default function PostDetailPage() {
   const router = useRouter();
