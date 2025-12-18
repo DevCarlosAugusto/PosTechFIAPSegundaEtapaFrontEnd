@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Figure = styled.figure`
-  margin: 50% auto;
+  margin: 0 auto;
   text-align: center;
   
   img {
@@ -24,10 +24,11 @@ export const ContainerHome = styled.div`
     line-height: 0;
     margin: 2rem 0;
     padding: 0 0 .5rem;
+    width: 100%;
   }
   
   .subtitle {
     color: var(--text-muted);
-    margin: 0 0 1.2rem;
+    margin: 0 0 2rem;
   }
 `;

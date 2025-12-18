@@ -10,9 +10,14 @@ const Container = styled.div`
 
 const Main = styled.main`
   flex: 1;
-  padding: 1.8rem 1.2rem 2.5rem;
+  padding: .75rem 1rem;
   max-width: 960px;
   margin: 0 auto;
+  width: 100%;
+  
+  @media(min-width: 1024px) {
+    padding: 1.8rem 1.2rem 2.5rem;
+  }
 `;
 
 const Footer = styled.footer`

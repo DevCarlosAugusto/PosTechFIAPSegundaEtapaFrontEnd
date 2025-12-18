@@ -6,7 +6,7 @@ import { PostSchema } from '../utils/validations/register.js';
 import { getPosts } from '../services/posts.service.js';
 
 import InputGroupBlock from '../components/forms/InputGroup/index.js';
-import PostCard from '../components/PostCard';
+import PostCard from '../components/postcard/PostCard.js';
 
 import { useAuth } from '../contexts/AuthContext';
 
@@ -43,24 +43,11 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div>
+    <>
       {loading && <p>Carregando...</p>}
 
       {
-        !loading && posts.length < 1 &&
-        (
-          <Figure>
-            <img alt="Sem posts"
-                 src="/images/no-data.gif" />
-            <figcaption>
-              <p>Nenhum post encontrado.</p>
-            </figcaption>
-          </Figure>
-        )
-      }
-
-      {
-        !loading && posts?.length > 0 &&
+        !loading &&
         (<ContainerHome>
           <h2 className="title" style={{ marginBottom: '.75rem' }}>Posts recentes</h2>
 
@@ -74,9 +61,21 @@ export default function HomePage() {
             <Form>
               <InputGroupBlock label={'Buscar'}
                                name="busca"
-                               placeholder="Teste qualquer" />
+                               placeholder="Ex: ReactJS" />
             </Form>
           </Formik>
+            {
+              !loading && posts.length < 1 &&
+              (
+                <Figure>
+                  <img alt="Sem posts"
+                       src="/images/no-data.gif" />
+                  <figcaption>
+                    <p>Nenhum post encontrado.</p>
+                  </figcaption>
+                </Figure>
+              )
+            }
 
             {
               posts.map((post) => (
@@ -86,6 +85,6 @@ export default function HomePage() {
         </ContainerHome>
         )
       }
-    </div>
+    </>
   );
 }
