@@ -1,34 +1,29 @@
 import { useState, useEffect } from 'react';
-import styled from 'styled-components';
 
 import { Formik, Form } from 'formik';
+import { PostSchema } from '../utils/validations/register.js';
 
 import { getPosts } from '../services/posts.service.js';
 
 import InputGroupBlock from '../components/forms/InputGroup/index.js';
 import PostCard from '../components/PostCard';
-import { PostSchema } from '../utils/validations/register.js';
 
+import { useAuth } from '../contexts/AuthContext';
 
-const SearchBar = styled.input`
-  width: 100%;
-  padding: 0.6rem 0.8rem;
-  margin-bottom: 1rem;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-`;
+import { ContainerHome, Figure} from './styles.js';
 
 
 export default function HomePage() {
   const [posts, setPosts] = useState([]);
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(false);
+  const { user } = useAuth();
 
   const formInitValues = {
-    title: '',
-    author: 'Exemplo',
-    content: 'Conteúdo de teste'
+    busca: search,
   };
+
+  console.info('USER: ', user);
 
   async function loadPosts() {
     setLoading(true);
@@ -49,40 +44,48 @@ export default function HomePage() {
 
   return (
     <div>
-      <h1 style={{ marginBottom: '0.75rem' }}>Posts recentes</h1>
-      <p
-        style={{
-          marginTop: 0,
-          marginBottom: '1.2rem',
-          color: 'var(--text-muted)',
-        }}
-      >
-        Explore os conteúdos publicados por professores.
-      </p>
-
-      <Formik initialValues={formInitValues}
-              validationSchema={PostSchema}
-              onSubmit={() => console.log('Salvo!')}>
-        <Form>
-          <InputGroupBlock label={'Black Lagoon'} placeholder="Teste qualquer" name="title" />
-          <button type="submit">Salvar</button>
-        </Form>
-      </Formik>
-
-      {/* <SearchBar
-        placeholder="Buscar por título, autor ou palavra-chave..."
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        onKeyDown={handleKeyDown}
-      /> */}
-
       {loading && <p>Carregando...</p>}
 
-      {!loading && posts.length === 0 && <p>Nenhum post encontrado.</p>}
+      {
+        !loading && posts.length < 1 &&
+        (
+          <Figure>
+            <img alt="Sem posts"
+                 src="/images/no-data.gif" />
+            <figcaption>
+              <p>Nenhum post encontrado.</p>
+            </figcaption>
+          </Figure>
+        )
+      }
 
-      {posts.map((post) => (
-        <PostCard key={post.id} post={post} />
-      ))}
+      {
+        !loading && posts?.length > 0 &&
+        (<ContainerHome>
+          <h2 className="title" style={{ marginBottom: '.75rem' }}>Posts recentes</h2>
+
+          <p className="subtitle">
+            Explore os conteúdos publicados por professores.
+          </p>
+
+          <Formik initialValues={formInitValues}
+                  validationSchema={PostSchema}
+                  onSubmit={() => console.log('Salvo!')}>
+            <Form>
+              <InputGroupBlock label={'Buscar'}
+                               name="busca"
+                               placeholder="Teste qualquer" />
+            </Form>
+          </Formik>
+
+            {
+              posts.map((post) => (
+                <PostCard key={post.id} post={post} />
+              ))
+            }
+        </ContainerHome>
+        )
+      }
     </div>
   );
 }

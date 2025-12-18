@@ -16,9 +16,9 @@ export const Header = styled.header`
 export const WebTitle = styled.h1`
   color: #fff;
   display: inline-block;
-  font-weight: 800;
+  font-weight: 600;
   line-height: 1rem;
-  margin: 0 0 .5rem;
+  margin: 0 0 .75rem;
   text-decoration: none;
   font-size: 1.4rem;
   letter-spacing: .25rem;
@@ -72,13 +72,15 @@ export const Nav = styled.nav`
   a {
     color: #e5e7eb;
     text-decoration: none;
-    padding: .35rem .75rem;
-    border-radius: 999px;
+    padding: .5rem 1rem;
+    border-radius: 1.5rem;
     transition: background .15s, color .15s;
   }
 `;
 
 export const NavLink = styled.a`
+  font-weight: 500;
+
   ${({ $active }) =>
   $active &&
   `

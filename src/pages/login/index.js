@@ -1,6 +1,6 @@
 import { Formik, Form } from 'formik';
 
-import FormikInputGroup from '../../components/forms/InputGroup/index.js';
+import InputGroupBlock from '../../components/forms/InputGroup/index.js';
 import { ButtonBox } from '../../components/forms/Button/styles.js';
 import { LoginSchema } from '../../utils/validations/login.js';
 import { useAuth } from '../../contexts/AuthContext';
@@ -30,10 +30,10 @@ export default function LoginPage() {
 
         {({ isValid }) =>(
           <Form autoComplete="off">
-            <FormikInputGroup label="E-mail"
+            <InputGroupBlock label="E-mail"
                               name="email"
                               type="email" />
-            <FormikInputGroup label="Senha"
+            <InputGroupBlock label="Senha"
                               name="password"
                               type="password" />
 

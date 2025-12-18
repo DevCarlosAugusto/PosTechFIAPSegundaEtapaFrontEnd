@@ -1,5 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
+import { jwtDecode } from 'jwt-decode';
+
 
 const AuthContext = createContext({});
 
@@ -23,14 +25,26 @@ export function AuthProvider({ children }) {
     setLoading(false);
   }, []);
 
-  const login = (data) => {
-    const { token, ...userData } = data;
+  const login = (apiResponse) => {
+    const { token, ...otherData } = apiResponse;
 
-    Cookies.set('auth_token', token, { expires: 1, path: '/' });
-    Cookies.set('user_data', JSON.stringify(userData), { expires: 1, path: '/' });
+    try {
+      const decodedToken = jwtDecode(token);
 
-    setUser(userData);
-    setIsAuthenticated(true);
+      const fullUserData = {
+        ...otherData,
+        email: decodedToken.email,
+        exp: decodedToken.exp
+      };
+
+      Cookies.set('auth_token', token, { expires: 1 });
+      Cookies.set('user_data', JSON.stringify(fullUserData), { expires: 1 });
+
+      setUser(fullUserData);
+      setIsAuthenticated(true);
+    } catch (error) {
+      console.error("Token inválido ou malformado", error);
+    }
   };
 
   const logout = () => {
