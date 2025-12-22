@@ -1,5 +1,7 @@
-import { useState } from "react";
 import { useRouter } from "next/router";
+import { Formik, Form } from "formik";
+import InputGroupBlock from "../components/forms/InputGroup/index.js";
+import { ButtonBox } from "../components/forms/Button/styles.js";
 
 export default function Register() {
   const router = useRouter();
@@ -7,59 +9,41 @@ export default function Register() {
   const BACKEND_URL =
     process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3000";
 
-  const [form, setForm] = useState({
+  const initialValues = {
     nome: "",
     email: "",
     password: "",
     user_type: "",
     serie: "",
     subject: "",
-  });
+  };
 
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
+  const validate = (values) => {
+    const errors = {};
+    const precisaSerieESubject = values.user_type === "ALUNO";
 
-  function handleChange(e) {
-    const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
-  }
+    if (!values.nome?.trim()) errors.nome = "Informe o nome.";
+    if (!values.email?.trim()) errors.email = "Informe o e-mail.";
+    if (!values.password?.trim()) errors.password = "Informe a senha.";
+    if (!values.user_type?.trim()) errors.user_type = "Selecione o tipo de usuário.";
 
-  async function handleSubmit(e) {
-    e.preventDefault();
-    setError("");
-    setSuccess("");
+    if (precisaSerieESubject) {
+      if (!values.serie?.trim()) errors.serie = "Informe a série.";
+      if (!values.subject?.trim()) errors.subject = "Informe a matéria.";
+    }
 
-    console.log("FORM:", form);
+    return errors;
+  };
 
-const precisaSerieESubject = form.user_type === "ALUNO";
-
-if (
-  !form.nome?.trim() ||
-  !form.email?.trim() ||
-  !form.password?.trim() ||
-  !form.user_type?.trim() ||
-  (precisaSerieESubject && (!form.serie?.trim() || !form.subject?.trim()))
-) {
-  setError("Preencha todos os campos.");
-  return;
-}
-
-
-    setLoading(true);
+  const handleSubmit = async (values, { setSubmitting, setStatus }) => {
+    setStatus({ error: "", success: "" });
 
     try {
-      console.log("Payload enviado:", form);
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/users/register`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(form),
-        }
-      );
+      const response = await fetch(`${BACKEND_URL}/users/register`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      });
 
       const data = await response.json();
 
@@ -67,87 +51,65 @@ if (
         throw new Error(data.message || "Erro ao cadastrar usuário");
       }
 
-      setSuccess("Usuário cadastrado com sucesso!");
+      setStatus({ error: "", success: "Usuário cadastrado com sucesso!" });
+
       setTimeout(() => router.push("/login"), 1000);
     } catch (err) {
-      setError(err.message);
+      setStatus({ error: err.message, success: "" });
     } finally {
-      setLoading(false);
+      setSubmitting(false);
     }
-  }
+  };
 
   return (
-    <div style={styles.container}>
-      <form onSubmit={handleSubmit} style={styles.form}>
-        <h1>Cadastro</h1>
+    <div style={{ padding: "2rem" }}>
+      <h1 style={{ padding: "0 0 2rem", fontWeight: "600" }}>Cadastro</h1>
 
-        {error && <p style={styles.error}>{error}</p>}
-        {success && <p style={styles.success}>{success}</p>}
+      <Formik initialValues={initialValues} validate={validate} onSubmit={handleSubmit}>
+        {({ values, isValid, isSubmitting, status, setFieldValue }) => {
+          const precisaSerieESubject = values.user_type === "ALUNO";
 
-        <input
-          name="nome"
-          placeholder="Nome"
-          value={form.nome}
-          onChange={handleChange}
-        />
+          return (
+            <Form autoComplete="off">
+              {status?.error ? <p style={{ color: "red" }}>{status.error}</p> : null}
+              {status?.success ? <p style={{ color: "green" }}>{status.success}</p> : null}
 
-        <input
-          name="email"
-          type="email"
-          placeholder="E-mail"
-          value={form.email}
-          onChange={handleChange}
-        />
-        <select name="user_type" value={form.user_type} onChange={handleChange}>
-          <option value="">Selecione o tipo de usuário</option>
-          <option value="ALUNO">Aluno</option>
-          <option value="PROFESSOR">Professor</option>
-        </select>
-        <input
-          name="password"
-          type="password"
-          placeholder="Senha"
-          value={form.password}
-          onChange={handleChange}
-        />
+              <InputGroupBlock label="Nome" name="nome" type="text" />
+              <InputGroupBlock label="E-mail" name="email" type="email" />
+              <InputGroupBlock label="Senha" name="password" type="password" />
 
-        <input
-          name="serie"
-          placeholder="Série (ex: 5ª Série)"
-          value={form.serie}
-          onChange={handleChange}
-        />
+              <div style={{ margin: "0 0 1rem" }}>
+                <label style={{ display: "block", marginBottom: 6, fontWeight: 500 }}>
+                  Tipo de usuário
+                </label>
 
-        <input
-          name="subject"
-          placeholder="Matéria (ex: Matemática)"
-          value={form.subject}
-          onChange={handleChange}
-        />
+                <select
+                  name="user_type"
+                  value={values.user_type}
+                  onChange={(e) => setFieldValue("user_type", e.target.value)}
+                  style={{ width: "100%", padding: "12px", borderRadius: 8 }}
+                >
+                  <option value="">Selecione</option>
+                  <option value="ALUNO">Aluno</option>
+                  <option value="PROFESSOR">Professor</option>
+                </select>
+              </div>
 
-        <button type="submit" disabled={loading}>
-          {loading ? "Cadastrando..." : "Cadastrar"}
-        </button>
-      </form>
+               {/* Só mostra Série e Matéria se for aluno */}
+              {precisaSerieESubject && (
+                <>
+                  <InputGroupBlock label="Série (ex: 5ª Série)" name="serie" type="text" />
+                  <InputGroupBlock label="Matéria (ex: Matemática)" name="subject" type="text" />
+                </>
+              )}
+
+              <ButtonBox disabled={!isValid || isSubmitting} type="submit">
+                {isSubmitting ? "Cadastrando..." : "Cadastrar"}
+              </ButtonBox>
+            </Form>
+          );
+        }}
+      </Formik>
     </div>
   );
 }
-
-const styles = {
-  container: {
-    minHeight: "100vh",
-    display: "grid",
-    placeItems: "center",
-  },
-  form: {
-    width: 350,
-    display: "grid",
-    gap: 12,
-  },
-  error: {
-    color: "red",
-  },
-  success: {
-    color: "green",
-  },
-};
