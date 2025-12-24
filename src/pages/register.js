@@ -2,6 +2,8 @@ import { useRouter } from "next/router";
 import { Formik, Form } from "formik";
 import InputGroupBlock from "../components/forms/InputGroup/index.js";
 import { ButtonBox } from "../components/forms/Button/styles.js";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Register() {
   const router = useRouter();
@@ -52,10 +54,12 @@ export default function Register() {
       }
 
       setStatus({ error: "", success: "Usuário cadastrado com sucesso!" });
+      toast.success("Usuário cadastrado com sucesso!");
 
       setTimeout(() => router.push("/login"), 1000);
     } catch (err) {
       setStatus({ error: err.message, success: "" });
+      toast.error(err.message);
     } finally {
       setSubmitting(false);
     }
@@ -71,8 +75,26 @@ export default function Register() {
 
           return (
             <Form autoComplete="off">
-              {status?.error ? <p style={{ color: "red" }}>{status.error}</p> : null}
-              {status?.success ? <p style={{ color: "green" }}>{status.success}</p> : null}
+              {status?.error ? (
+                <p style={{
+                  color: "red",
+                  fontSize: "14px",
+                  fontWeight: "bold",
+                  margin: "0px 0px 20px 0"
+                }}>
+                  {status.error}
+                </p>
+              ) : null}
+              {status?.error ? (
+                <p style={{
+                  color: "green",
+                  fontSize: "14px",
+                  fontWeight: "bold",
+                  margin: "0px 0px 20px 0"
+                }}>
+                  {status.success}
+                </p>
+              ) : null} 
 
               <InputGroupBlock label="Nome" name="nome" type="text" />
               <InputGroupBlock label="E-mail" name="email" type="email" />
@@ -95,7 +117,6 @@ export default function Register() {
                 </select>
               </div>
 
-               {/* Só mostra Série e Matéria se for aluno */}
               {precisaSerieESubject && (
                 <>
                   <InputGroupBlock label="Série (ex: 5ª Série)" name="serie" type="text" />
