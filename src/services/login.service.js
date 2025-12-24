@@ -7,13 +7,11 @@ export async function signInWithEmailAndPassword({ email, password }) {
     return data;
   } catch (error) {
     if (error.response) {
-      console.error('Erro no servidor: ', error.response.data);
-      console.error('Status: ', error.response.status);
+      throw new Error(error.response.data.message || 'Erro ao realizar login.');
     } else if (error.request) {
-      console.error('Sem resposta do servidor: ', error.request);
+      throw new Error('Sem resposta do servidor.');
     } else {
-      console.error('Erro na requisição: ', error.message);
+      throw new Error('Erro na requisição.');
     }
-    throw error;
   }
 }
