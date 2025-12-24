@@ -49,15 +49,14 @@ function HeaderComponent() {
         <Nav>
           {MENU.map((item) =>
             item.action === "logout" ? (
-              <NavLink
-                as="button"
+              <button
                 type="button"
                 key="logout"
                 onClick={handleLogout}
                 $active={false}
               >
                 {item.text}
-              </NavLink>
+              </button>
             ) : (
               <NavLink
                 $active={router.pathname === item.path}
