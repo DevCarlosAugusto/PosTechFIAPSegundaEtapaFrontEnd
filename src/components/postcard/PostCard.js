@@ -17,18 +17,28 @@ function PostCard({ post }) {
   const [user, setUserData] = useState({});
   const resumo = post?.content ? post.content.slice(0, 140) + '...' : post.content;
 
-  async function loadUserData() {
-    if (!post?.created_by_id) return;
+  useEffect(() => {
+    let isMounted = true;
 
-    try {
-      const data = await getUserById(post.created_by_id);
-      setUserData(data);
-    } catch (err) {
-      console.error('Erro ao carregar dados de postagem', err);
+    async function loadUserData() {
+      if (!post?.created_by_id) return;
+
+      try {
+        const data = await getUserById(post.created_by_id);
+        if (isMounted) {
+          setUserData(data);
+        }
+      } catch (err) {
+        console.error('Erro ao carregar dados de postagem', err);
+      }
     }
-  }
 
-  useEffect(() => loadUserData(), []);
+    loadUserData();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [post?.created_by_id]);
 
   return (
     <Card>
