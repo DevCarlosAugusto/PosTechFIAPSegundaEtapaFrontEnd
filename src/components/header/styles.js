@@ -22,6 +22,13 @@ export const WebTitle = styled.h1`
   text-decoration: none;
   font-size: 1.4rem;
   letter-spacing: 0.25rem;
+  
+  &.WebTitle--init {
+    color: var(--black-01);
+    margin: 2rem 0 3rem;
+    text-align: center;
+    width: 100%;
+  }
 `;
 
 export const WebSubtitle = styled.h4`

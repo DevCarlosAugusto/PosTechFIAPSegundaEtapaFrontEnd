@@ -9,6 +9,9 @@ import { useAuth } from '../../contexts/AuthContext';
 
 import { signInWithEmailAndPassword } from '../../services/login.service.js';
 
+import { ErrorMessage, LoginTitle } from './styles';
+import { WebTitle } from '../../components/header/styles.js';
+
 export default function LoginPage() {
   const form = { email: '', password: '' };
   const { login } = useAuth();
@@ -26,8 +29,8 @@ export default function LoginPage() {
   };
 
   return (
-    <div style={{ padding: '2rem' }}>
-      <h1 className="" style={{ padding: '0 0 2rem', fontWeight: '600' }}>Login</h1>
+    <>
+      <WebTitle className="WebTitle--init">Login</WebTitle>
 
       <Formik initialValues={form}
               validationSchema={LoginSchema}
@@ -39,27 +42,18 @@ export default function LoginPage() {
                 } catch (error) {
                   setStatus({ error: error.message || 'Erro ao realizar login.' });
                 }
-              }}
-      >
+              }}>
 
         {({ isValid, status }) =>(
           <Form autoComplete="off">
-            {status?.error ? (
-              <p style={{
-                color: "red",
-                fontSize: "14px",
-                fontWeight: "bold",
-                margin: "0px 0px 20px 0"
-              }}>
-                {status.error}
-              </p>
-            ) : null}
             <InputGroupBlock label="E-mail"
-                              name="email"
-                              type="email" />
+                             name="email"
+                             type="email" />
             <InputGroupBlock label="Senha"
-                              name="password"
-                              type="password" />
+                             name="password"
+                             type="password" />
+
+            {status?.error ? (<ErrorMessage>{status.error}</ErrorMessage>) : null}
 
             <ButtonBox disabled={!(isValid)}
                        label="Entrar"
@@ -67,6 +61,6 @@ export default function LoginPage() {
           </Form>
         )}
       </Formik>
-    </div>
+    </>
   );
 }
