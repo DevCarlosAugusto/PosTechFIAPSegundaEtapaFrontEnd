@@ -42,7 +42,7 @@ O frontend consome dados de uma API backend.
 ## Fluxos principais da aplicação
 
 ### 📝 Cadastro de usuário
-- **Rota:** `/register`
+- **Rota Frontend:** `/register`
 - **Descrição:** Tela onde novos usuários (alunos) podem se registrar.  
 - **Informações exibidas:**
   - Formulário com campos: nome, e-mail e senha.

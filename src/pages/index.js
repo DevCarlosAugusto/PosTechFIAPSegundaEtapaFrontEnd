@@ -33,7 +33,10 @@ export default function HomePage() {
   }
 
   useEffect(() => {
-    loadPosts();
+    async function fetchPosts() {
+      await loadPosts();
+    }
+    fetchPosts();
   }, []);
 
   return (

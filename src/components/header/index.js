@@ -1,7 +1,7 @@
-import { useRouter } from 'next/router';
-import Link from 'next/link';
+import { useRouter } from "next/router";
+import Link from "next/link";
 
-import { useAuth } from '../../contexts/AuthContext';
+import { useAuth } from "../../contexts/AuthContext";
 
 import {
   Header,
@@ -9,13 +9,32 @@ import {
   WebTitle,
   Nav,
   NavLink,
-  WebSubtitle
-} from './styles';
+  WebSubtitle,
+} from "./styles";
 
-function header() {
-  const { isAuthenticated } = useAuth();
+function HeaderComponent() {
+  const { isAuthenticated, logout, user } = useAuth();
   const router = useRouter();
-  const MENU = isAuthenticated ? [{ path: '/', text: 'Postagens'}, { path: '/posts/add', text: 'Nova Postagem'}] : [{ path: '/login', text: 'Login'}, { path: '/register', text: 'Cadastro'}];
+
+  const isProfessor = user?.user_type === "PROFESSOR";
+
+  const MENU = isAuthenticated
+    ? [
+        { path: "/", text: "Postagens" },
+
+        ...(isProfessor ? [{ path: "/posts/add", text: "Nova Postagem" }] : []),
+
+        { action: "logout", text: "Sair" },
+      ]
+    : [
+        { path: "/login", text: "Login" },
+        { path: "/register", text: "Cadastro" },
+      ];
+
+  const handleLogout = () => {
+    logout();
+    router.replace("/login");
+  };
 
   return (
     <Header>
@@ -28,15 +47,27 @@ function header() {
         </div>
 
         <Nav>
-          {
-            MENU.map(({ path, text }) => (
-              <NavLink $active={router.pathname === path} href={path} key={path}>{text}</NavLink>
-            ))
-          }
+          {MENU.map((item) =>
+            item.action === "logout" ? (
+              <NavLink $active={false}
+                       as="button"
+                       key="logout"
+                       onClick={handleLogout}
+                       type="button">
+                {item.text}
+              </NavLink>
+            ) : (
+              <NavLink $active={router.pathname === item.path}
+                       href={item.path}
+                       key={item.path}>
+                {item.text}
+              </NavLink>
+            )
+          )}
         </Nav>
       </Header__Wrapper>
     </Header>
   );
 }
 
-export default header;
+export default HeaderComponent;
