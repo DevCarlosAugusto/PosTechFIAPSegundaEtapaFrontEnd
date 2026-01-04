@@ -8,9 +8,7 @@ import { getUserById } from '../../services/users.service.js';
 function formatDate(dateString) {
   if (!dateString) return '';
   return new Date(dateString).toLocaleString();
-/*
-  return new Intl.DateTimeFormat('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric',   }).format(new Date(dateString));
-*/
+  // return new Intl.DateTimeFormat('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric',   }).format(new Date(dateString));
 }
 
 function PostCard({ post }) {
@@ -28,7 +26,9 @@ function PostCard({ post }) {
     }
   }
 
-  useEffect(() => loadUserData(), []);
+  useEffect(() => {
+    loadUserData()
+  }, []);
 
   return (
     <Card>
