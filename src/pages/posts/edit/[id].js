@@ -1,80 +1,33 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+
 import { getPostById, updatePost } from '../../../services/posts.service.js';
+import { useAuth } from '../../../contexts/AuthContext';
 
-export default function PostEditPage() {
+import PostForm from '../../../components/forms/PostForm';
+import { ContainerHome } from '../../styles.js';
+
+export default function PostEditPage(values, { postExistente }) {
   const router = useRouter();
-  const { id } = router.query;
-  const [form, setForm] = useState({ title: '', author: '', content: '' });
-  const [loading, setLoading] = useState(false);
+  const { user } = useAuth();
 
-  useEffect(() => {
-    if (id) {
-      async function fetchPost() {
-        try {
-          const data = await getPostById(id);
-          setForm(data);
-        } catch (err) {
-          console.error('Erro ao carregar post', err);
-        }
-      }
-      fetchPost();
-    }
-  }, [id]);
-
-  async function handleSubmit(e) {
-    e.preventDefault();
-    try {
-      setLoading(true);
-      await updatePost(id, form);
-      router.push(`/posts/${id}`); // Redireciona para a página de detalhes do post
-    } catch (err) {
-      console.error('Erro ao atualizar post', err);
-    } finally {
-      setLoading(false);
-    }
+  if (user.user_type !== 'PROFESSOR') {
+    // router.push(`/posts/edit/${postExistente.id}`);
+    return null;
   }
 
-  function handleChange(e) {
-    const { name, value } = e.target;
-    setForm({ ...form, [name]: value });
-  }
+  const handleEdit = async (values) => {
+    console.info(values, 'VALUES EDIT');
+    console.info(postExistente, 'EXISTENTE');
+  };
 
   return (
-    <div>
-      <h1>Editar Post</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Título</label>
-          <input
-            name="title"
-            value={form.title}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label>Autor</label>
-          <input
-            name="author"
-            value={form.author}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label>Conteúdo</label>
-          <textarea
-            name="content"
-            value={form.content}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <button type="submit" disabled={loading}>
-          {loading ? 'Salvando...' : 'Salvar Alterações'}
-        </button>
-      </form>
-    </div>
+    <ContainerHome>
+      <h2 className="title">Editar Post</h2>
+
+      <PostForm initialValues={postExistente}
+                onSubmit={handleEdit}
+                buttonLabel="Salvar Alterações" />
+    </ContainerHome>
   );
 }

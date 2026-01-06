@@ -12,6 +12,10 @@ export const Card = styled.article`
     transform: translateY(-.125rem);
     box-shadow: var(--shadow-soft);
   }
+
+  & + & {
+    margin-top: 1.4rem;
+  }
 `;
 
 export const Title = styled.h3`
