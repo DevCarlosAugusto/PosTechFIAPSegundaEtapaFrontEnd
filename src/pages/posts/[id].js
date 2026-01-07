@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
+
 import { useRouter } from 'next/router';
 import { getPostById } from '../../services/posts.service.js';
 import { getUserById } from '../../services/users.service.js';
 
+import { ButtonBox } from "../../components/forms/Button/styles.js";
 
 function formatDate(dateString) {
   if (!dateString) return '';
@@ -51,7 +54,7 @@ export default function PostDetailPage() {
   if (!post) return <p>Post não encontrado.</p>;
 
   return (
-    <div>
+    <article>
       <h1>{post.title}</h1>
       <p>
         <strong>Autor:</strong> {creator?.nome || 'Autor desconhecido'}
@@ -60,6 +63,8 @@ export default function PostDetailPage() {
         <strong>Criada em:</strong> <small>{post.created_at ? formatDate(post.created_at) : 'Data não informada'}</small>
       </p>
       <p>{post.content}</p>
-    </div>
+
+      <ButtonBox className="button--edit" as="a" href={`/posts/edit/${id}`}>Editar</ButtonBox>
+    </article>
   );
 }

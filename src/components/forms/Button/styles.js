@@ -5,9 +5,13 @@ export const ButtonBox = styled.button`
   border-radius: .25rem;
   cursor: pointer;
   color: var(--white);
+  display: inline-flex;
   font-weight: 400;
+  justify-content: center;
   min-width: 8rem;
   padding: .5rem .75rem;
+  text-align: center;
+  text-decoration: none;
 
   &:hover:not(:disabled) {
     background-color: #005bc1;
@@ -22,6 +26,10 @@ export const ButtonBox = styled.button`
     background-color: var(--text-muted);
     cursor: not-allowed;
     opacity: .75;
+  }
+  
+  &.button--edit {
+    margin-top: 2rem;
   }
 
   &.button--loading {
