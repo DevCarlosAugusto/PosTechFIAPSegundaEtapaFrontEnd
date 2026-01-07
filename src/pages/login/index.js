@@ -23,8 +23,6 @@ export default function LoginPage() {
       toast.success('Login realizado com sucesso!');
     } catch (error) {
       toast.error('Erro ao realizar login. Verifique suas credenciais.');
-    } finally {
-      console.log('FIM');
     }
   };
 
