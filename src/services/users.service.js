@@ -1,7 +1,6 @@
 import api from './api';
 
 export async function getUserById(id) {
-  console.info(id, 'ID')
   const { data } = await api.get(`/users/${id}`);
   return data;
 }

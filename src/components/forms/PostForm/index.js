@@ -3,7 +3,7 @@ import { PostSchema } from '../../../utils/validations/posts.js';
 import InputGroupBlock from '../InputGroup/index.js';
 import ButtonBox from '../Button/index.js';
 
-export default function PostForm({ initialValues, onSubmit, buttonLabel }) {
+export default function PostForm({ initialValues, onSubmit, buttonLabel, buttonIsDisabled = false }) {
   const defaultValues = {
     title: '',
     content: '',

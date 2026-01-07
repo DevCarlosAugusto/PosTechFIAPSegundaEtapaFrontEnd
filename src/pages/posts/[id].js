@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
 
 import { useRouter } from 'next/router';
 import { getPostById } from '../../services/posts.service.js';
@@ -11,7 +10,6 @@ function formatDate(dateString) {
   if (!dateString) return '';
   return new Date(dateString).toLocaleString();
 }
-
 
 export default function PostDetailPage() {
   const router = useRouter();
@@ -31,21 +29,22 @@ export default function PostDetailPage() {
     }
   }
 
+  async function fetchPost() {
+    try {
+      const data = await getPostById(id);
+      if (data?.created_by_id) {
+        loadCreatorData(data?.created_by_id);
+      }
+      setPost(data);
+    } catch (err) {
+      console.error('Erro ao carregar post', err);
+    } finally {
+      setLoading(false);
+    }
+  }
+
   useEffect(() => {
     if (id) {
-      async function fetchPost() {
-        try {
-          const data = await getPostById(id);
-          if (data?.created_by_id) {
-            loadCreatorData(data?.created_by_id);
-          }
-          setPost(data);
-        } catch (err) {
-          console.error('Erro ao carregar post', err);
-        } finally {
-          setLoading(false);
-        }
-      }
       fetchPost();
     }
   }, [id]);

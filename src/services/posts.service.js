@@ -24,7 +24,6 @@ export async function getPostById(id) {
 
 export async function createPost(payload) {
   try {
-    console.log(payload)
     const { data } = await api.post('/posts', payload);
     return data;
   } catch (error) {
