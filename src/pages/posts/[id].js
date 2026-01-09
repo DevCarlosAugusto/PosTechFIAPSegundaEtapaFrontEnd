@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { getPostById } from '../../services/posts.service.js';
 import { getUserById } from '../../services/users.service.js';
-
+import { useAuth } from '../../contexts/AuthContext';
 import { ButtonBox } from "../../components/forms/Button/styles.js";
 
 function formatDate(dateString) {
@@ -14,9 +14,12 @@ function formatDate(dateString) {
 export default function PostDetailPage() {
   const router = useRouter();
   const { id } = router.query;
+  const { user } = useAuth(); 
   const [post, setPost] = useState(null);
   const [creator, setCreatorData] = useState({});
   const [loading, setLoading] = useState(true);
+
+  const isProfessor = user?.user_type === "PROFESSOR";
 
   async function loadCreatorData(id) {
     if (!id) return;
@@ -63,7 +66,9 @@ export default function PostDetailPage() {
       </p>
       <p>{post.content}</p>
 
-      <ButtonBox className="button--edit" as="a" href={`/posts/edit/${id}`}>Editar</ButtonBox>
+      {isProfessor ? ( 
+        <ButtonBox className="button--edit" as="a" href={`/posts/edit/${id}`}>Editar</ButtonBox>
+      ) : null}
     </article>
   );
 }
